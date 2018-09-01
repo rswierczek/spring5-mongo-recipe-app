@@ -42,7 +42,7 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     @Override
-    public Recipe findById(Long id) {
+    public Recipe findById(String id) {
         return recipeRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Recipe Not Found! For ID value: " + id));
     }
@@ -57,12 +57,12 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Transactional
     @Override
-    public RecipeCommand findCommandById(Long id) {
+    public RecipeCommand findCommandById(String id) {
         return recipeToRecipeCommand.convert(findById(id));
     }
 
     @Override
-    public void deleteById(Long idToDelete) {
+    public void deleteById(String idToDelete) {
         recipeRepository.deleteById(idToDelete);
     }
 }

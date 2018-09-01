@@ -3,9 +3,9 @@ package guru.springframework.spring5recipeapp.services;
 import guru.springframework.spring5recipeapp.commands.IngredientCommand;
 
 public interface IngredientService {
-    IngredientCommand findByRecipeIdAndIngredientId(Long recipientId, Long ingredientId);
+    IngredientCommand findByRecipeIdAndIngredientId(String recipientId, String ingredientId);
 
     IngredientCommand saveIngredientCommand(IngredientCommand ingredientCommand);
 
-    void deleteById(Long recipeId, Long id);
+    void deleteById(String recipeId, String id);
 }

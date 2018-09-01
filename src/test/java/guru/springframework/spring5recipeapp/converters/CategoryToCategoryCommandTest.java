@@ -8,7 +8,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class CategoryToCategoryCommandTest {
-    public static final Long ID_VALUE = new Long(1L);
+    public static final String ID_VALUE = "1";
     public static final String DESCRIPTION = "description";
     private CategoryToCategoryCommand conveter;
 

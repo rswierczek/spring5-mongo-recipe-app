@@ -21,8 +21,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 public class RecipeControllerTest {
 
-    public static final long RECIPE_ID_1 = 1L;
-    public static final long RECIPE_ID_2 = 2L;
+    public static final String RECIPE_ID_1 = "1";
+    public static final String RECIPE_ID_2 = "2";
     private RecipeController recipeController;
 
     @Mock
@@ -108,24 +108,17 @@ public class RecipeControllerTest {
     @Test
     public void testGetRecipeNotFound() throws Exception {
         Recipe recipe = new Recipe();
-        recipe.setId(1L);
-        when(recipeService.findById(anyLong())).thenThrow(NotFoundException.class);
+        recipe.setId("1");
+        when(recipeService.findById(anyString())).thenThrow(NotFoundException.class);
         mockMvc.perform(get("/recipe/1/show"))
                 .andExpect(status().isNotFound())
                 .andExpect(view().name("404error"));
     }
 
     @Test
-    public void testGetRecipeNumberFormatException() throws Exception {
-        mockMvc.perform(get("/recipe/asdf/show"))
-                .andExpect(status().isBadRequest())
-                .andExpect(view().name("400error"));
-    }
-
-    @Test
     public void testPostNewRecipeFormValidationFail() throws Exception {
         RecipeCommand command = new RecipeCommand();
-        command.setId(2L);
+        command.setId(RECIPE_ID_2);
         when(recipeService.saveRecipeCommand(any())).thenReturn(command);
         mockMvc.perform(post("/recipe")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)

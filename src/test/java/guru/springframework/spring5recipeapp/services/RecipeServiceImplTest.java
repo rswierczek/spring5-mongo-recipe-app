@@ -32,8 +32,8 @@ public class RecipeServiceImplTest {
     @Mock
     RecipeCommandToRecipe recipeCommandToRecipe;
 
-    private final static Long RECIPE_ID_1 = 1L;
-    private final static Long RECIPE_ID_2 = 2L;
+    private final static String RECIPE_ID_1 = "1";
+    private final static String RECIPE_ID_2 = "2";
 
     @Before
     public void setUp() throws Exception {
@@ -74,27 +74,27 @@ public class RecipeServiceImplTest {
     @Test
     public void getRecipeCommandById() throws Exception {
         Recipe recipe = new Recipe();
-        recipe.setId(1L);
+        recipe.setId("1");
         Optional<Recipe> recipeOptional = Optional.of(recipe);
 
-        when(recipeRepository.findById(anyLong())).thenReturn(recipeOptional);
+        when(recipeRepository.findById(anyString())).thenReturn(recipeOptional);
 
         RecipeCommand recipeCommand = new RecipeCommand();
-        recipeCommand.setId(1L);
+        recipeCommand.setId("1");
 
         when(recipeToRecipeCommand.convert(any())).thenReturn(recipeCommand);
 
-        RecipeCommand commandById = recipeService.findCommandById(1L);
+        RecipeCommand commandById = recipeService.findCommandById("1");
 
         assertNotNull("Null recipe returned", commandById);
-        verify(recipeRepository, times(1)).findById(anyLong());
+        verify(recipeRepository, times(1)).findById(anyString());
         verify(recipeRepository, never()).findAll();
     }
 
     @Test
     public void deletedById() throws Exception {
         //given
-        Long idToDelete = RECIPE_ID_2;
+        String idToDelete = RECIPE_ID_2;
 
         //when
         recipeService.deleteById(idToDelete);
@@ -107,8 +107,8 @@ public class RecipeServiceImplTest {
     @Test(expected = NotFoundException.class)
     public void getRecipeByIdTestNotFound() throws Exception {
         Optional<Recipe> recipeOptional = Optional.empty();
-        when(recipeRepository.findById(anyLong())).thenReturn(recipeOptional);
-        Recipe recipeReturned = recipeService.findById(1L);
+        when(recipeRepository.findById(anyString())).thenReturn(recipeOptional);
+        Recipe recipeReturned = recipeService.findById("1");
         //should go boom
     }
 }
